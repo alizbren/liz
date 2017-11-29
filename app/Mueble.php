@@ -8,7 +8,7 @@ class Mueble extends Model
 {
     protected $table="mueble";
      protected $primaryKey="id";
-     protected $fillable = array('nombre','descripcion','id_am','tipo');
+     protected $fillable = array('Nombre','cod_m','color','id_am','descripcion');
 
      public function ambiente()
      {

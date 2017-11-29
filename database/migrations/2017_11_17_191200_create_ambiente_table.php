@@ -15,9 +15,12 @@ class CreateAmbienteTable extends Migration
         Schema::create('ambiente', function (Blueprint $table) {
             $table->increments('id');
             $table->string("Nombre");
+            $table->string("cod_am");
+            $table->integer("sillasc");
+            $table->integer("mesasc");
             $table->string("descripcion");
-            $table->integer("estado");
-            $table->integer("cantidada");         
+            $table->integer("enchufesc");
+            $table->integer("personasc");         
             $table->timestamps();
         });
     }

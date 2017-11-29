@@ -11,6 +11,8 @@ use Redirect;
 use Session;
 
 use \App\Ambiente;
+use  \App\Mueble;
+use  \App\Material;
 
 class AmbienteControler extends Controller
 {
@@ -34,29 +36,19 @@ class AmbienteControler extends Controller
     }
     public function store(Request $request)
 
-    {
-        //dd($request->all());
-         $rules = array(
-           'Nombre'            => 'required',
-           'descripcion'       => 'required|min:3',
-           'cantidada'          =>'required',
-     
-                
-            );
-
-        $validator = Validator::make($request->all(), $rules);
-        if($validator->fails()){
-            return redirect()->back()->withInput()->withErrors($validator->errors());
-        }else{
-            $ambiente = new Ambiente;
-            $ambiente->Nombre           =$request->input("Nombre");
-            $ambiente->descripcion      =$request->input("descripcion");
-            $ambiente->cantidada         =$request->input("cantidada");
-                   
+    {       $ambiente = new Ambiente;
+            $ambiente->Nombre          =$request->input("Nombre");
+            $ambiente->sillasc         =$request->input("sillasc");
+            $ambiente->mesasc          =$request->input("mesasc");
+            $ambiente->enchufesc       =$request->input("enchufesc");
+            $ambiente->personasc        =$request->input("personas");
+                    
+            $ambiente->save();
+            $ambiente->cod_am=$ambiente->Nombre.$ambiente->id;
             $ambiente->save();
             Session::flash("success", "Mascota".$ambiente->ambiente." creado correctamente" );
             return redirect("ambiente");
-        }
+        
     }
    public function edit($id)
     {
@@ -67,17 +59,40 @@ class AmbienteControler extends Controller
     {
        
             $ambiente = Ambiente::find($id);
-            $ambiente->Nombre           =$request->get("Nombre");
-            $ambiente->descripcion      =$request->get("descripcion");
-            $ambiente->cantidada        =$request->get("cantidada");
-                   
+            $ambiente->Nombre          =$request->get("Nombre");
+            $ambiente->sillasc         =$request->get("sillasc");
+            $ambiente->mesasc          =$request->get("mesasc");
+            $ambiente->enchufesc       =$request->get("enchufesc");
+            $ambiente->personasc        =$request->get("personas");
+                    
             $ambiente->save();
-            Session::flash("success", "Ambiente".$ambiente->ambiente." creado correctamente" );
-            return redirect("/");
+            $ambiente->cod_am=$ambiente->Nombre.$ambiente->id;
+            $ambiente->save();
+            Session::flash("success", "Mascota".$ambiente->ambiente." creado correctamente" );
+            return redirect("ambiente");
         
     }
-     public function destroy($id)
-    {
+       public function destroy($id)
+    { 
+      $ambiente = Ambiente::find($id);
+      $material=Material::all();
+      $mueble=Mueble::all();
+
+    for($i=0; $i<count($material); $i++) 
+    { if($material[$i]->id_ambiente==$id )
+
+        {$m[$i] = Material::where('id_ambiente','=',$id)->first();
+         $m[$i]->delete();
+         }
+    }
+     for($i=0; $i<count($mueble); $i++) 
+    { if($mueble[$i]->id_am==$id )
+
+        {$mu[$i] = Mueble::where('id_am',$id)->first();
+         $mu[$i]->delete();
+         }
+    }
+
         Ambiente::destroy($id);
         return redirect()->route('ambiente.index');
     }

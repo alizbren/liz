@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -13,22 +13,14 @@ use \App\Ambiente;
 use \App\Mueble;
 use \App\Material;
 
-
-class MaterialController extends Controller
+class MaterialAgregarController extends Controller
 {
-    public function index()
+     public function create($id)
     {
-        $mueble=Mueble::all();
-        $ambiente=Ambiente::all();
-
-        return view('admi.materiales_listar',compact('mueble','ambiente'));
-        //return view('eventos.calendario',compact('ambiente'));
-    }
-    public function create($id)
-    {
-        $mueble=Mueble::find($id);
-        $ambiente = Ambiente::where('id',$mueble->id_am)->first();   
-        return view('admi.registrar_ma',compact('material','mueble','ambiente'));
+        $material=Material::find($id);
+        $ambiente = Ambiente::where('id',$material->id_ambiente)->first();
+        $mueble = Mueble::where('id',$material->id_mueble)->first();   
+        return view('admi.materialcomp',compact('material','mueble','ambiente'));
     }
 
 
@@ -64,12 +56,4 @@ class MaterialController extends Controller
             return redirect("ambiente/{$mueble->id_ambiente}/informacion");
         
     }
-
-      public function destroy($id)
-    {
-        Material::destroy($id);
-        
-        return redirect()->route('ambiente.index');
-    }
 }
- 

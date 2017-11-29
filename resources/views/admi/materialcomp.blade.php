@@ -5,11 +5,11 @@
 
 @section('content')
 
- <form action="{{route('material.store')}}" method="POST" enctype="multipart/form-data" class="form-horizontal"  >
+ <form action="{{route('componente.store')}}" method="POST" enctype="multipart/form-data" class="form-horizontal"  >
   <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token()}}" />
 
   <input type="hidden" name="id_mueble"  value="{{$mueble->id}}" />
-  <input type="hidden" name="id_componentes"  value="1" />
+  <input type="hidden" name="id_componentes"  value="{{$material->id}}" />
   <input type="hidden" name="id_ambiente"  value="{{$ambiente->id}}" />
   <input type="hidden" name="donante"  value="1" />
   <input type="hidden" name="fabricante"  value="1" />
@@ -20,8 +20,10 @@
 <div class="col-lg-10">
   <section class="panel">
                                   <header class="panel-heading">
-                                   <h3><center><b>  REGISTRO DE MATERIAL</b></center></h3><b> Codigo ambiente: {{$ambiente->cod_am}}
-                                   <br>Codigo Mueble: {{$mueble->cod_m}}</b>
+                                   <h3><center><b>  REGISTRO DE COMPONENTE DE MATERIAL</b></center></h3><b> Codigo ambiente: {{$ambiente->cod_am}}
+                                   <br>Codigo Mueble: {{$mueble->cod_m}}
+                                    <br>   Codigo Material: {{$material->cod_ma}}
+                                 </b>
                                   </header>
                                   <div class="panel-body">
                              

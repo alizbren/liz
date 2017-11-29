@@ -8,7 +8,7 @@ class Ambiente extends Model
 {
     protected $table = "Ambiente";
 	protected $primaryKey = 'id';
-	protected $fillable = array("Nombres","descripcion","estado","cantidada");
+	protected $fillable = array("Nombres","descripcion","cod_am","sillasc","mesasc","enchufesc","personasc");
 
   public function mueble()
   {
